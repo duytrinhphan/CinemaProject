@@ -584,7 +584,6 @@
     <Content Include="Views\Home\MovieShow.cshtml" />
     <Content Include="Views\Home\DetailNew.cshtml" />
     <Content Include="Views\Home\MovieSoone.cshtml" />
-    <Content Include="Views\Home\ChonGhe.cshtml" />
     <Content Include="Views\Home\Payment.cshtml" />
     <Content Include="Views\Home\TimKiem.cshtml" />
     <Content Include="Views\Home\Combo.cshtml" />
