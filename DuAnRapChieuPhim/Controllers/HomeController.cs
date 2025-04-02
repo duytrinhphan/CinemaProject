@@ -18,7 +18,6 @@ using Microsoft.AspNet.SignalR;
 using System.Web.UI;
 using System.IO;
 using ZXing.QrCode.Internal;
-using DuAnRapChieuPhim.Hubs;
 using System.Threading.Tasks;
 using iText.Kernel.Pdf;
 using iText.Layout;
@@ -1215,7 +1214,38 @@ namespace DuAnRapChieuPhim.Controllers
             Session.Remove("voucher");
             return View();
         }
-        
+
+        [SavePreviousPage]
+        public ActionResult ChonGhe(int id, int MaChieuPhim)
+        {
+            var lc = db.LichChieus.SingleOrDefault(u => u.MaChieuPhim == MaChieuPhim);
+            var cthd = db.ChiTietHoaDons.Where(u => u.MaLichChieu == lc.MaChieuPhim && u.ThoiGianChieu.Value.Date == lc.NgayChieu.Value.Date && u.HoaDon.TrangThai == "Đã thanh toán");
+            var ghe = db.Ghes.Where(u => u.MaPhong == lc.Phong);
+
+            foreach (var chiTiet in cthd)
+            {
+                var gheTrongChiTiet = ghe.FirstOrDefault(g => g.MaGhe == chiTiet.MaGhe);
+                if (gheTrongChiTiet != null)
+                {
+                    gheTrongChiTiet.TrangThai = "Đã đặt";
+                    // Gửi thông điệp tới tất cả client để cập nhật trạng thái ghế
+                    var hubContext = GlobalHost.ConnectionManager.GetHubContext<DatVe>();
+                    hubContext.Clients.All.receiveSeatStatus(chiTiet.MaGhe, "");
+                }
+            }
+
+            Session["MaCP"] = MaChieuPhim;
+            // Cập nhật trạng thái "Trống" cho những ghế không trùng khớp
+            foreach (var gheKhongTrongChiTiet in ghe.Where(g => !cthd.Any(c => c.MaGhe == g.MaGhe)))
+            {
+                gheKhongTrongChiTiet.TrangThai = "Trống";
+            }
+            // Cập nhật thay đổi vào cơ sở dữ liệu
+            db.SubmitChanges();
+
+            return View(ghe);
+        }
+
 
 
         [SavePreviousPage]
