@@ -41,5 +41,21 @@ namespace DuAnRapChieuPhim.Hubs
                 timer.Dispose();
             }
         }
+
+        public void TimeoutSeat(string MaGhe)
+        {
+            Clients.All.revertSeat(MaGhe);
+
+            if (seatTimers.TryRemove(MaGhe, out Timer timer))
+            {
+                timer.Dispose();
+            }
+        }
+
+        private void TimerCallback(object state)
+        {
+            string MaGhe = (string)state;
+            TimeoutSeat(MaGhe);
+        }
     }
 }
