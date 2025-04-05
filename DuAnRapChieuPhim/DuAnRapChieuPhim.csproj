@@ -598,6 +598,7 @@
     <Content Include="Views\Home\QRCheck.cshtml" />
     <Content Include="Views\Home\ReturnMOMO.cshtml" />
     <Content Include="Views\Home\DSVoucher.cshtml" />
+    <Content Include="Views\Home\ChonGhe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
