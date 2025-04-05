@@ -1,4 +1,4 @@
-using DuAnRapChieuPhim.Models;
+﻿using DuAnRapChieuPhim.Models;
 using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
 using System;
@@ -7,6 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
+using System.Collections.Concurrent;
+using System.Threading;
 
 namespace DuAnRapChieuPhim.Hubs
 {

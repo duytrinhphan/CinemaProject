@@ -32,6 +32,7 @@ using System.Security.Claims;
 using System.Net.Http.Headers;
 using System.Net.Http;
 using Microsoft.Owin.Security;
+using DuAnRapChieuPhim.Hubs;
 namespace DuAnRapChieuPhim.Controllers
 {
     public class HomeController : Controller
